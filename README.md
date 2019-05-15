@@ -70,3 +70,9 @@ In this sample, we retrieved and printed a list of email headers from an IMAP se
 ## License ##
 
 MailCore 2 is BSD-Licensed.
+
+## This Fork ##
+Added support for the following:
+
+- SORT Operation
+- Fetch SNIPPET (Requires libetpan: https://github.com/ghsoft82/libetpan)
