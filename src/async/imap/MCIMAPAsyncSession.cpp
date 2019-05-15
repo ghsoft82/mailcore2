@@ -33,6 +33,7 @@
 #include "MCIMAPFetchParsedContentOperation.h"
 #include "MCIMAPStoreFlagsOperation.h"
 #include "MCIMAPStoreLabelsOperation.h"
+#include "MCIMAPSortOperation.h"
 #include "MCIMAPSearchOperation.h"
 #include "MCIMAPConnectOperation.h"
 #include "MCIMAPCheckAccountOperation.h"
@@ -711,6 +712,31 @@ IMAPOperation * IMAPAsyncSession::storeLabelsByNumberOperation(String * folder, 
     op->setNumbers(numbers);
     op->setKind(kind);
     op->setLabels(labels);
+    op->autorelease();
+    return op;
+}
+
+IMAPSortOperation * IMAPAsyncSession::sortOperation(String * folder, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchKind searchKind, String * searchString)
+{
+    IMAPSortOperation * op = new IMAPSortOperation();
+    op->setMainSession(this);
+    op->setFolder(folder);
+    op->setSortKind(sortKind);
+    op->setIsReverse(isReverse);
+    op->setSearchKind(searchKind);
+    op->setSearchString(searchString);
+    op->autorelease();
+    return op;
+}
+
+IMAPSortOperation * IMAPAsyncSession::sortOperation(String * folder, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchExpression * searchExpression)
+{
+    IMAPSortOperation * op = new IMAPSortOperation();
+    op->setMainSession(this);
+    op->setFolder(folder);
+    op->setSortKind(sortKind);
+    op->setIsReverse(isReverse);
+    op->setSearchExpression(searchExpression);
     op->autorelease();
     return op;
 }

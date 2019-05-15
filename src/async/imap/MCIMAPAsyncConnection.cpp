@@ -26,6 +26,7 @@
 #include "MCIMAPStoreFlagsOperation.h"
 #include "MCIMAPStoreLabelsOperation.h"
 #include "MCIMAPSearchOperation.h"
+#include "MCIMAPSortOperation.h"
 #include "MCIMAPConnectOperation.h"
 #include "MCIMAPCheckAccountOperation.h"
 #include "MCIMAPFetchNamespaceOperation.h"
@@ -86,7 +87,7 @@ namespace mailcore {
         }
 
         virtual void log(void * sender, ConnectionLogType logType, Data * buffer)
-        {
+{
             mConnection->logConnection(logType, buffer);
         }
 

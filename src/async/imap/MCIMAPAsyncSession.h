@@ -44,6 +44,7 @@ namespace mailcore {
     class OperationQueueCallback;
     class IMAPCustomCommandOperation;
     class IMAPCheckAccountOperation;
+    class IMAPSortOperation;
     
     class MAILCORE_EXPORT IMAPAsyncSession : public Object {
     public:
@@ -165,6 +166,9 @@ namespace mailcore {
         
         virtual IMAPSearchOperation * searchOperation(String * folder, IMAPSearchKind kind, String * searchString);
         virtual IMAPSearchOperation * searchOperation(String * folder, IMAPSearchExpression * expression);
+
+        virtual IMAPSortOperation * sortOperation(String * folder, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchKind kind, String * searchString);
+        virtual IMAPSortOperation * sortOperation(String * folder, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchExpression * searchExpression);
         
         virtual IMAPIdleOperation * idleOperation(String * folder, uint32_t lastKnownUID);
         

@@ -240,6 +240,24 @@ typedef NS_ENUM(NSInteger, MCOIMAPSearchKind) {
     MCOIMAPSearchKindNot,
 };
 
+/** It's the sort type.*/
+typedef NS_ENUM(NSInteger, MCOIMAPSortKind) {
+    /** Sort by Arrival */
+    MCOIMAPSortKindByArrival,
+    /** Sort by Date */
+    MCOIMAPSortKindByDate,
+    /** Sort by From */
+    MCOIMAPSortKindByFrom,
+    /** Sort by CC */
+    MCOIMAPSortKindByCC,
+    /** Sort by To */
+    MCOIMAPSortKindByTo,
+    /** Sort by Subject */
+    MCOIMAPSortKindBySubject,
+    /** Sort by Size */
+    MCOIMAPSortKindBySize,
+};
+
 /** Keys for the namespace dictionary.*/
 #define MCOIMAPNamespacePersonal @"IMAPNamespacePersonal"
 #define MCOIMAPNamespaceOther @"IMAPNamespaceOther"

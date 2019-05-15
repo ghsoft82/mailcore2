@@ -27,6 +27,7 @@
 @class MCOIMAPFetchContentToFileOperation;
 @class MCOIMAPFetchParsedContentOperation;
 @class MCOIMAPSearchOperation;
+@class MCOIMAPSortOperation;
 @class MCOIMAPIdleOperation;
 @class MCOIMAPFetchNamespaceOperation;
 @class MCOIMAPSearchExpression;
@@ -972,6 +973,41 @@ vanishedMessages will be set only for servers that support QRESYNC. See [RFC5162
 - (MCOIMAPCapabilityOperation *) capabilityOperation;
 
 - (MCOIMAPQuotaOperation *) quotaOperation;
+
+/** @name Sort Operations */
+
+/**
+ Returns an operation to search for messages with a simple match and return a sorted array
+ //GH: TODO
+ MCOIMAPSortOperation * op = [session searchOperationWithFolder:@"INBOX"
+ kind:MCOIMAPSearchKindFrom
+ searchString:@"laura"];
+ [op start:^(NSError * __nullable error, NSArray * sortResult)
+{
+ ...
+ }];
+ */
+- (MCOIMAPSortOperation *) sortOperationWithFolder:(NSString *)folder
+                                                  sortKind:(MCOIMAPSortKind)sortKind
+                                                  isReverse:(BOOL)isReverse
+                                                  searchKind:(MCOIMAPSearchKind)searchKind
+                                                  searchString:(NSString *)searchString;
+
+/**
+ Returns an operation to search for messages.
+
+ MCOIMAPSearchExpression * expr = [MCOIMAPSearchExpression searchFrom:@"laura@etpan.org"]
+ MCOIMAPSearchOperation * op = [session searchExpressionOperationWithFolder:@"INBOX"
+ expression:expr];
+ [op start:^(NSError * __nullable error, NSArray * sortResult)
+{
+ ...
+ }];
+ */
+- (MCOIMAPSortOperation *) sortWithSearchExpressionOperationWithFolder:(NSString *)folder
+                                                      sortKind:(MCOIMAPSortKind)sortKind
+                                                      isReverse:(BOOL)isReverse
+                                                      searchExpression:(MCOIMAPSearchExpression *)searchExpression;
 
 /** @name Search Operations */
 

@@ -28,6 +28,7 @@
 #include <MailCore/MCIMAPNamespace.h>
 #include <MailCore/MCIMAPIdentity.h>
 #include <MailCore/MCIMAPSearchOperation.h>
+#include <MailCore/MCIMAPSortOperation.h>
 #include <MailCore/MCIMAPSearchExpression.h>
 #include <MailCore/MCIMAPFetchNamespaceOperation.h>
 #include <MailCore/MCIMAPIdentityOperation.h>

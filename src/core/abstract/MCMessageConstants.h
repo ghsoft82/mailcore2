@@ -209,6 +209,16 @@ namespace mailcore {
         IMAPSearchKindAnd,
         IMAPSearchKindNot,
     };
+
+    enum IMAPSortKind {
+        IMAPSortKindByArrival,
+        IMAPSortKindByDate,
+        IMAPSortKindByFrom,
+        IMAPSortKindByTo,
+        IMAPSortKindByCC,
+        IMAPSortKindBySubject,
+        IMAPSortKindBySize,
+    };
     
     enum ErrorCode {
         ErrorNone, // 0

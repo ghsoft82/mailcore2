@@ -36,7 +36,7 @@ using namespace mailcore;
 class MCOIMAPCallbackBridge : public Object, public ConnectionLogger, public OperationQueueCallback {
 public:
     MCOIMAPCallbackBridge(MCOIMAPSession * session)
-    {
+{
         mSession = session;
     }
     
@@ -48,12 +48,12 @@ public:
     }
     
     virtual void queueStartRunning()
-    {
+{
         [mSession _queueRunningChanged];
     }
 
     virtual void queueStoppedRunning()
-    {
+{
         [mSession _queueRunningChanged];
     }
     
@@ -585,6 +585,32 @@ MCO_OBJC_SYNTHESIZE_SCALAR(dispatch_queue_t, dispatch_queue_t, setDispatchQueue,
                                                                                (IMAPStoreFlagsRequestKind) kind,
                                                                                MCO_FROM_OBJC(Array, labels));
     return OPAQUE_OPERATION(coreOp);
+}
+
+- (MCOIMAPSortOperation *) sortOperationWithFolder:(NSString *)folder
+                                          sortKind:(MCOIMAPSortKind)sortKind
+                                         isReverse:(BOOL)isReverse
+                                        searchKind:(MCOIMAPSearchKind)searchKind
+                                      searchString:(NSString *)searchString
+{
+    IMAPSortOperation * coreOp = MCO_NATIVE_INSTANCE->sortOperation([folder mco_mcString],
+                                                                    (IMAPSortKind)sortKind,
+                                                                    isReverse,
+                                                                    (IMAPSearchKind) searchKind,
+                                                                    [searchString mco_mcString]);
+    return MCO_TO_OBJC_OP(coreOp);
+}
+
+- (MCOIMAPSortOperation *) sortWithSearchExpressionOperationWithFolder:(NSString *)folder
+                                                              sortKind:(MCOIMAPSortKind)sortKind
+                                                             isReverse:(BOOL)isReverse
+                                                      searchExpression:(MCOIMAPSearchExpression *)searchExpression
+{
+    IMAPSortOperation * coreOp = MCO_NATIVE_INSTANCE->sortOperation([folder mco_mcString],
+                                                                    (IMAPSortKind)sortKind,
+                                                                    isReverse,
+                                                                    MCO_FROM_OBJC(IMAPSearchExpression, searchExpression));
+    return MCO_TO_OBJC_OP(coreOp);
 }
 
 - (MCOIMAPSearchOperation *) searchOperationWithFolder:(NSString *)folder
