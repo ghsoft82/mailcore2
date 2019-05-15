@@ -6,10 +6,6 @@
 	<string>4</string>
 	<key>ctemplate-osx</key>
 	<string>3</string>
-	<key>libetpan-ios</key>
-	<string>21</string>
-	<key>libetpan-osx</key>
-	<string>21</string>
 	<key>mailcore2-framework-osx</key>
 	<string>9</string>
 	<key>mailcore2-ios</key>

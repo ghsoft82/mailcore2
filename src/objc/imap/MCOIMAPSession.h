@@ -978,12 +978,13 @@ vanishedMessages will be set only for servers that support QRESYNC. See [RFC5162
 
 /**
  Returns an operation to search for messages with a simple match and return a sorted array
- //GH: TODO
- MCOIMAPSortOperation * op = [session searchOperationWithFolder:@"INBOX"
- kind:MCOIMAPSearchKindFrom
- searchString:@"laura"];
- [op start:^(NSError * __nullable error, NSArray * sortResult)
-{
+    MCOIMAPSortOperation * op = [session sortOperationWithFolder:@"INBOX"
+        sortKind:MCOIMAPSortKindByArrival
+        isReverse:YES
+        searchKind:MCOIMAPSearchKindFrom
+        searchString:@"laura"];
+    [op start:^(NSError * __nullable error, NSArray * sortResult)
+    {
  ...
  }];
  */
@@ -996,11 +997,14 @@ vanishedMessages will be set only for servers that support QRESYNC. See [RFC5162
 /**
  Returns an operation to search for messages.
 
- MCOIMAPSearchExpression * expr = [MCOIMAPSearchExpression searchFrom:@"laura@etpan.org"]
- MCOIMAPSearchOperation * op = [session searchExpressionOperationWithFolder:@"INBOX"
- expression:expr];
- [op start:^(NSError * __nullable error, NSArray * sortResult)
-{
+ Returns an operation to search for messages with a simple match and return a sorted array
+    MCOIMAPSearchExpression * expr = [MCOIMAPSearchExpression searchFrom:@"laura@etpan.org"]
+    MCOIMAPSortOperation * op = [session sortOperationWithFolder:@"INBOX"
+        sortKind:MCOIMAPSortKindByArrival
+        isReverse:YES
+        searchsearchExpression:expr;
+        [op start:^(NSError * __nullable error, NSArray * sortResult)
+    {
  ...
  }];
  */

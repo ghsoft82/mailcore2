@@ -27,6 +27,7 @@ void IMAPMessage::init()
     mGmailThreadID = 0;
     mGmailMessageID = 0;
     mSize = 0;
+    mSnippet = NULL;
 }
 
 IMAPMessage::IMAPMessage()
@@ -51,6 +52,7 @@ IMAPMessage::IMAPMessage(IMAPMessage * other) : AbstractMessage(other)
     setGmailLabels(other->gmailLabels());
     setGmailThreadID(other->gmailThreadID());
     setGmailMessageID(other->gmailMessageID());
+    setSnippet(other->snippet());
 }
 
 IMAPMessage::~IMAPMessage()
@@ -69,6 +71,9 @@ String * IMAPMessage::description()
 {
     String * result = String::string();
     result->appendUTF8Format("<%s:%p %u %u\n", className()->UTF8Characters(), this, (unsigned int) uid(), (unsigned int) sequenceNumber());
+    if (mSnippet != NULL) {
+        result->appendUTF8Format("Snippet: %s\n", mSnippet->UTF8Characters());
+    }
     result->appendString(header()->description());
     if (mainPart() != NULL) {
         result->appendString(mainPart()->description());
@@ -245,6 +250,16 @@ AbstractPart * IMAPMessage::partForUniqueID(String * uniqueID)
     return mainPart()->partForUniqueID(uniqueID);
 }
 
+String * IMAPMessage::snippet()
+{
+    return mSnippet;
+}
+
+void IMAPMessage::setSnippet(String *snippet)
+{
+    mSnippet = snippet;
+}
+
 String * IMAPMessage::htmlRendering(String * folder,
                                     HTMLRendererIMAPCallback * dataCallback,
                                     HTMLRendererTemplateCallback * htmlCallback)
@@ -261,6 +276,9 @@ HashMap * IMAPMessage::serializable()
     result->setObjectForKey(MCSTR("size"), String::stringWithUTF8Format("%lu", (long unsigned) size()));
     result->setObjectForKey(MCSTR("flags"), String::stringWithUTF8Format("%u", (unsigned) flags()));
     result->setObjectForKey(MCSTR("originalFlags"), String::stringWithUTF8Format("%u", (unsigned) originalFlags()));
+    if (mSnippet != NULL) {
+        result->setObjectForKey(MCSTR("snippet"), snippet());
+    }
     if (customFlags() != NULL) {
         result->setObjectForKey(MCSTR("customFlags"), customFlags());
     }
@@ -317,6 +335,7 @@ void IMAPMessage::importSerializable(HashMap * serializable)
     if (gmailThreadID != NULL) {
         setGmailThreadID(gmailThreadID->unsignedLongLongValue());
     }
+    setSnippet((String *) serializable->objectForKey(MCSTR("snippet")));
 }
 
 static void * createObject()

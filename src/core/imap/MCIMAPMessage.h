@@ -57,6 +57,9 @@ namespace mailcore {
         
         virtual AbstractPart * partForContentID(String * contentID);
         virtual AbstractPart * partForUniqueID(String * uniqueID);
+
+        virtual void setSnippet(String * snippet);
+        virtual String * snippet();
         
         virtual String * htmlRendering(String * folder,
                                        HTMLRendererIMAPCallback * dataCallback,
@@ -82,6 +85,7 @@ namespace mailcore {
         Array * /* String */ mGmailLabels;
         uint64_t mGmailMessageID;
         uint64_t mGmailThreadID;
+        String * mSnippet;
         void init();
     };
     

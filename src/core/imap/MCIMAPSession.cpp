@@ -2504,11 +2504,19 @@ static void msg_att_handler(struct mailimap_msg_att * msg_att, void * context)
         else if (att_item->att_type == MAILIMAP_MSG_ATT_ITEM_STATIC)
         {
             struct mailimap_msg_att_static * att_static;
-
             att_static = att_item->att_data.att_static;
             if (att_static->att_type == MAILIMAP_MSG_ATT_UID)
             {
                 uid = att_static->att_data.att_uid;
+            }
+            else if (att_static->att_type == MAILIMAP_MSG_ATT_SNIPPET)
+            {
+                String * snippet;
+
+                MCLog("parse snippet %lu", (unsigned long) uid);
+                snippet = String::stringWithUTF8Characters(att_static->att_data.att_snippet);
+                msg->setSnippet(snippet);
+                hasHeader = true;
             }
             else if (att_static->att_type == MAILIMAP_MSG_ATT_ENVELOPE)
             {
@@ -2606,6 +2614,8 @@ static void msg_att_handler(struct mailimap_msg_att * msg_att, void * context)
                 msgID = (uint64_t *) ext_data->ext_data;
                 msg->setGmailMessageID(*msgID);
                 hasGmailMessageID = true;
+            }
+                break;
             }
         }
     }
@@ -2823,6 +2833,12 @@ IMAPSyncResult * IMAPSession::fetchMessages(String * folder, IMAPMessagesRequest
         fetch_att = mailimap_fetch_att_new_bodystructure();
         mailimap_fetch_type_new_fetch_att_list_add(fetch_type, fetch_att);
         needsBody = true;
+    }
+    if ((requestKind & IMAPMessagesRequestKindSnippet) != 0)
+    {
+        // snippet
+        fetch_att = mailimap_fetch_att_new_snippet();
+        mailimap_fetch_type_new_fetch_att_list_add(fetch_type, fetch_att);
     }
     if ((requestKind & IMAPMessagesRequestKindInternalDate) != 0)
     {
