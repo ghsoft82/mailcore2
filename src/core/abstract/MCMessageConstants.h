@@ -211,6 +211,14 @@ namespace mailcore {
         IMAPSearchKindNot,
     };
 
+    enum IMAPESearchReturn {
+        IMAPESearchReturnAll,
+        IMAPESearchReturnMin,
+        IMAPESearchReturnMax,
+        IMAPESearchReturnCount,
+        IMAPESearchReturnPartial,
+    };
+
     enum IMAPSortKind {
         IMAPSortKindByArrival,
         IMAPSortKindByDate,

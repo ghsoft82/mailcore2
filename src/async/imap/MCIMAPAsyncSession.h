@@ -169,6 +169,9 @@ namespace mailcore {
 
         virtual IMAPSortOperation * sortOperation(String * folder, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchKind kind, String * searchString);
         virtual IMAPSortOperation * sortOperation(String * folder, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchExpression * searchExpression);
+
+        virtual IMAPSortOperation * esortOperation(String * folder, IMAPESearchReturn esearchReturn, uint32_t partialLow, uint32_t partialHigh, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchKind kind, String * searchString);
+        virtual IMAPSortOperation * esortOperation(String * folder, IMAPESearchReturn esearchReturn, uint32_t partialLow, uint32_t partialHigh, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchExpression * searchExpression);
         
         virtual IMAPIdleOperation * idleOperation(String * folder, uint32_t lastKnownUID);
         

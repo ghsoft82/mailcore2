@@ -741,6 +741,39 @@ IMAPSortOperation * IMAPAsyncSession::sortOperation(String * folder, IMAPSortKin
     return op;
 }
 
+IMAPSortOperation * IMAPAsyncSession::esortOperation(String * folder, IMAPESearchReturn esearchReturn, uint32_t partialLow, uint32_t partialHigh, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchKind searchKind, String * searchString)
+{
+    IMAPSortOperation * op = new IMAPSortOperation();
+    op->setMainSession(this);
+    op->setFolder(folder);
+    op->setIsESort(true);
+    op->setEsearchReturn(esearchReturn);
+    op->setPartialLow(partialLow);
+    op->setPartialHigh(partialHigh);
+    op->setSortKind(sortKind);
+    op->setIsReverse(isReverse);
+    op->setSearchKind(searchKind);
+    op->setSearchString(searchString);
+    op->autorelease();
+    return op;
+}
+
+IMAPSortOperation * IMAPAsyncSession::esortOperation(String * folder, IMAPESearchReturn esearchReturn, uint32_t partialLow, uint32_t partialHigh, IMAPSortKind sortKind, Boolean isReverse, IMAPSearchExpression * searchExpression)
+{
+    IMAPSortOperation * op = new IMAPSortOperation();
+    op->setMainSession(this);
+    op->setFolder(folder);
+    op->setIsESort(true);
+    op->setEsearchReturn(esearchReturn);
+    op->setPartialLow(partialLow);
+    op->setPartialHigh(partialHigh);
+    op->setSortKind(sortKind);
+    op->setIsReverse(isReverse);
+    op->setSearchExpression(searchExpression);
+    op->autorelease();
+    return op;
+}
+
 IMAPSearchOperation * IMAPAsyncSession::searchOperation(String * folder, IMAPSearchKind kind, String * searchString)
 {
     IMAPSearchOperation * op = new IMAPSearchOperation();

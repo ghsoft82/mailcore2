@@ -2488,8 +2488,8 @@ static void msg_att_handler(struct mailimap_msg_att * msg_att, void * context)
         struct mailimap_msg_att_item * att_item;
 
         att_item = (struct mailimap_msg_att_item *) clist_content(item_iter);
-        if (att_item->att_type == MAILIMAP_MSG_ATT_ITEM_DYNAMIC)
-        {
+        switch (att_item->att_type) {
+            case MAILIMAP_MSG_ATT_ITEM_DYNAMIC: {
             MessageFlag flags;
 
             flags = flags_from_lep_att_dynamic(att_item->att_data.att_dyn);
@@ -2500,9 +2500,9 @@ static void msg_att_handler(struct mailimap_msg_att * msg_att, void * context)
             Array * customFlags;
             customFlags = custom_flags_from_lep_att_dynamic(att_item->att_data.att_dyn);
             msg->setCustomFlags(customFlags);
-        }
-        else if (att_item->att_type == MAILIMAP_MSG_ATT_ITEM_STATIC)
-        {
+                break;
+            }
+            case MAILIMAP_MSG_ATT_ITEM_STATIC: {
             struct mailimap_msg_att_static * att_static;
             att_static = att_item->att_data.att_static;
             if (att_static->att_type == MAILIMAP_MSG_ATT_UID)
@@ -2562,9 +2562,9 @@ static void msg_att_handler(struct mailimap_msg_att * msg_att, void * context)
                 msg->setMainPart(mainPart);
                 hasBody = true;
             }
-        }
-        else if (att_item->att_type == MAILIMAP_MSG_ATT_ITEM_EXTENSION)
-        {
+                break;
+            }
+            case MAILIMAP_MSG_ATT_ITEM_EXTENSION: {
             struct mailimap_extension_data * ext_data;
 
             ext_data = att_item->att_data.att_extension_data;
@@ -4061,6 +4061,105 @@ Array * IMAPSession::sort(String * folder, IMAPSortKind sortKind, int isReverse,
         result->addObject(uidStr);
     }
     mailimap_search_result_free(result_list);
+    * pError = ErrorNone;
+    return result;
+}
+
+Array * IMAPSession::esort(String * folder, IMAPESearchReturn esearchReturn, int partialLow, int partialHigh, IMAPSortKind sortKind, int isReverse, IMAPSearchKind searchKind, String * searchString, ErrorCode * pError)
+{
+    IMAPSearchExpression * expr;
+    expr = searchExpressionFromSearchKind(searchKind, searchString);
+
+    return esort(folder, esearchReturn, partialLow, partialHigh, sortKind, isReverse, expr, pError);
+}
+
+Array * IMAPSession::esort(String * folder, IMAPESearchReturn esearchReturn, int partialLow, int partialHigh, IMAPSortKind sortKind, int isReverse, IMAPSearchExpression * searchExpression, ErrorCode * pError)
+{
+    struct mailimap_search_key * search_key;
+    struct mailimap_sort_key * sort_key;
+    const int ESEARCH_RETURN_STRING_MAX = 512;
+    char esearch_return_char[ESEARCH_RETURN_STRING_MAX];
+    char * esearch_return_str;
+
+    selectIfNeeded(folder, pError);
+    if (* pError != ErrorNone)
+        return NULL;
+
+    struct mailimap_set * result_set = NULL;
+
+    const char * charset = "utf-8";
+    if (mYahooServer)
+    {
+        charset = NULL;
+    }
+    search_key = searchKeyFromSearchExpression(searchExpression);
+    sort_key = sortKeyFromKind(sortKind, isReverse);
+    switch (esearchReturn)
+    {
+        case IMAPESearchReturnAll:
+        {
+            snprintf(esearch_return_char, ESEARCH_RETURN_STRING_MAX, "RETURN (ALL)");
+            break;
+        }
+        case IMAPESearchReturnMax:
+        {
+            snprintf(esearch_return_char, ESEARCH_RETURN_STRING_MAX, "RETURN (MAX)");
+            break;
+        }
+        case IMAPESearchReturnMin:
+        {
+            snprintf(esearch_return_char, ESEARCH_RETURN_STRING_MAX, "RETURN (MIN)");
+            break;
+        }
+        case IMAPESearchReturnCount:
+        {
+            snprintf(esearch_return_char, ESEARCH_RETURN_STRING_MAX, "RETURN (COUNT)");
+            break;
+        }
+        case IMAPESearchReturnPartial:
+        {
+            if (partialLow <= 0 || partialHigh <= 0) {
+                * pError = ErrorParse;
+                return NULL;
+            }
+            snprintf(esearch_return_char, ESEARCH_RETURN_STRING_MAX, "RETURN (PARTIAL %i:%i)", partialLow, partialHigh);
+            break;
+        }
+        default:
+        {
+            * pError = ErrorParse;
+            return NULL;
+        }
+    }
+
+    esearch_return_str = strdup(esearch_return_char);
+
+    int r = mailimap_uid_esort(mImap, charset, esearch_return_str, sort_key, search_key, &result_set);
+
+    mailimap_search_key_free(search_key);
+    mailimap_sort_key_free(sort_key);
+    free(esearch_return_str);
+    MCLog("had error : %i", r);
+    if (r == MAILIMAP_ERROR_STREAM)
+    {
+        mShouldDisconnect = true;
+        * pError = ErrorConnection;
+        return NULL;
+    }
+    else if (r == MAILIMAP_ERROR_PARSE)
+    {
+        mShouldDisconnect = true;
+        * pError = ErrorParse;
+        return NULL;
+    }
+    else if (hasError(r))
+    {
+        * pError = ErrorFetch;
+        return NULL;
+    }
+
+    Array * result = arrayFromSet(result_set);
+    mailimap_set_free(result_set);
     * pError = ErrorNone;
     return result;
 }

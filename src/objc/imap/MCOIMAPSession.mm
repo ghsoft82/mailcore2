@@ -613,6 +613,44 @@ MCO_OBJC_SYNTHESIZE_SCALAR(dispatch_queue_t, dispatch_queue_t, setDispatchQueue,
     return MCO_TO_OBJC_OP(coreOp);
 }
 
+- (MCOIMAPSortOperation *) esortOperationWithFolder:(NSString *)folder
+                                      esearchReturn:(MCOIMAPESearchReturn)esearchReturn
+                                         partialLow:(uint32_t)partialLow
+                                        partialHigh:(uint32_t)partialHigh
+                                           sortKind:(MCOIMAPSortKind)sortKind
+                                          isReverse:(BOOL)isReverse
+                                         searchKind:(MCOIMAPSearchKind)searchKind
+                                       searchString:(NSString *)searchString
+{
+    IMAPSortOperation * coreOp = MCO_NATIVE_INSTANCE->esortOperation([folder mco_mcString],
+                                                                     (IMAPESearchReturn)esearchReturn,
+                                                                     partialLow,
+                                                                     partialHigh,
+                                                                     (IMAPSortKind)sortKind,
+                                                                     isReverse,
+                                                                     (IMAPSearchKind) searchKind,
+                                                                     [searchString mco_mcString]);
+    return MCO_TO_OBJC_OP(coreOp);
+}
+
+- (MCOIMAPSortOperation *) esortWithSearchExpressionOperationWithFolder:(NSString *)folder
+                                                          esearchReturn:(MCOIMAPESearchReturn)esearchReturn
+                                                             partialLow:(uint32_t)partialLow
+                                                            partialHigh:(uint32_t)partialHigh
+                                                               sortKind:(MCOIMAPSortKind)sortKind
+                                                              isReverse:(BOOL)isReverse
+                                                       searchExpression:(MCOIMAPSearchExpression *)searchExpression
+{
+    IMAPSortOperation * coreOp = MCO_NATIVE_INSTANCE->esortOperation([folder mco_mcString],
+                                                                     (IMAPESearchReturn)esearchReturn,
+                                                                     partialLow,
+                                                                     partialHigh,
+                                                                     (IMAPSortKind)sortKind,
+                                                                     isReverse,
+                                                                     MCO_FROM_OBJC(IMAPSearchExpression, searchExpression));
+    return MCO_TO_OBJC_OP(coreOp);
+}
+
 - (MCOIMAPSearchOperation *) searchOperationWithFolder:(NSString *)folder
                                                   kind:(MCOIMAPSearchKind)kind
                                           searchString:(NSString *)searchString

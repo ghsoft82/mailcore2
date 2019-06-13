@@ -242,6 +242,20 @@ typedef NS_ENUM(NSInteger, MCOIMAPSearchKind) {
     MCOIMAPSearchKindNot,
 };
 
+/** It's the esearch return type.*/
+typedef NS_ENUM(NSInteger, MCOIMAPESearchReturn) {
+    /** ESearch Return All */
+    MCOIMAPESearchReturnAll,
+    /** ESearch Return Min, Min = First Emain in the Sorteds Set */
+    MCOIMAPESearchReturnMin,
+    /** ESearch Return Max, Max = Last Emain in the Sorteds Set */
+    MCOIMAPESearchReturnMax,
+    /** ESearch Return Count */
+    MCOIMAPESearchReturnCount,
+    /** ESearch Return Partial */
+    MCOIMAPESearchReturnPartial,
+};
+
 /** It's the sort type.*/
 typedef NS_ENUM(NSInteger, MCOIMAPSortKind) {
     /** Sort by Arrival */

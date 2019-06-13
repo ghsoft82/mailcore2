@@ -26,6 +26,18 @@ namespace mailcore
         IMAPSortOperation();
         virtual ~IMAPSortOperation();
 
+        virtual void setIsESort(Boolean isESort);
+        virtual Boolean isESort();
+
+        virtual void setEsearchReturn(IMAPESearchReturn esearchReturn);
+        virtual IMAPESearchReturn esearchReturn();
+
+        virtual void setPartialLow(int partialLow);
+        virtual int partialLow();
+
+        virtual void setPartialHigh(int partialHigh);
+        virtual int partialHigh();
+
         virtual void setSortKind(IMAPSortKind sortKind);
         virtual IMAPSortKind sortKind();
 
@@ -48,6 +60,10 @@ namespace mailcore
         virtual void main();
 
     private:
+        Boolean mIsESort;
+        IMAPESearchReturn mEsearchReturn;
+        int mPartialLow;
+        int mPartialHigh;
         IMAPSortKind mSortKind;
         Boolean mIsReverse;
         IMAPSearchKind mSearchKind;

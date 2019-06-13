@@ -76,3 +76,4 @@ Added support for the following:
 
 - SORT Operation
 - Fetch SNIPPET (Requires libetpan: https://github.com/ghsoft82/libetpan)
+- Added ESORT (Requires libetpan: https://github.com/ghsoft82/libetpan)

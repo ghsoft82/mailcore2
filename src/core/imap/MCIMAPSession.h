@@ -8,7 +8,8 @@
 
 #ifdef __cplusplus
 
-namespace mailcore {
+namespace mailcore
+{
 
     extern String * IMAPNamespacePersonal;
     extern String * IMAPNamespaceOther;
@@ -22,7 +23,8 @@ namespace mailcore {
     class IMAPFolderStatus;
     class IMAPIdentity;
 
-    class MAILCORE_EXPORT IMAPSession : public Object {
+    class MAILCORE_EXPORT IMAPSession : public Object
+    {
     public:
         IMAPSession();
         virtual ~IMAPSession();
@@ -159,6 +161,9 @@ namespace mailcore {
 
         virtual Array * sort(String * folder, IMAPSortKind sortKind, int isReverse, IMAPSearchKind searchKind, String * searchString, ErrorCode * pError);
         virtual Array * sort(String * folder, IMAPSortKind sortKind, int isReverse, IMAPSearchExpression * searchExpression, ErrorCode * pError);
+
+        virtual Array * esort(String * folder, IMAPESearchReturn esearchReturn, int partialLow, int partialHigh, IMAPSortKind sortKind, int isReverse, IMAPSearchKind searchKind, String * searchString, ErrorCode * pError);
+        virtual Array * esort(String * folder, IMAPESearchReturn esearchReturn, int partialLow, int partialHigh, IMAPSortKind sortKind, int isReverse, IMAPSearchExpression * searchExpression, ErrorCode * pError);
 
         virtual void getQuota(uint32_t *usage, uint32_t *limit, ErrorCode * pError);
 

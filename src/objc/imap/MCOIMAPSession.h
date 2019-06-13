@@ -1013,6 +1013,51 @@ vanishedMessages will be set only for servers that support QRESYNC. See [RFC5162
                                                       isReverse:(BOOL)isReverse
                                                       searchExpression:(MCOIMAPSearchExpression *)searchExpression;
 
+/** @name ESort Operations */
+
+/**
+ Returns an operation to search for messages with a simple match and return a sorted array with specific Return
+ MCOIMAPSortOperation * op = [session sortOperationWithFolder:@"INBOX"
+ sortKind:MCOIMAPSortKindByArrival
+ isReverse:YES
+ searchKind:MCOIMAPSearchKindFrom
+ searchString:@"laura"];
+ [op start:^(NSError * __nullable error, NSArray * sortResult)
+ {
+ ...
+ }];
+ */
+- (MCOIMAPSortOperation *) esortOperationWithFolder:(NSString *)folder
+                                      esearchReturn:(MCOIMAPESearchReturn)esearchReturn
+                                         partialLow:(uint32_t)partialLow
+                                        partialHigh:(uint32_t)partialHigh
+                                           sortKind:(MCOIMAPSortKind)sortKind
+                                          isReverse:(BOOL)isReverse
+                                         searchKind:(MCOIMAPSearchKind)searchKind
+                                       searchString:(NSString *)searchString;
+
+/**
+ Returns an operation to search for messages.
+
+ Returns an operation to search for messages with a simple match and return a sorted array
+ MCOIMAPSearchExpression * expr = [MCOIMAPSearchExpression searchFrom:@"laura@etpan.org"]
+ MCOIMAPSortOperation * op = [session sortOperationWithFolder:@"INBOX"
+ sortKind:MCOIMAPSortKindByArrival
+ isReverse:YES
+ searchsearchExpression:expr;
+ [op start:^(NSError * __nullable error, NSArray * sortResult)
+ {
+ ...
+ }];
+ */
+- (MCOIMAPSortOperation *) esortWithSearchExpressionOperationWithFolder:(NSString *)folder
+                                                          esearchReturn:(MCOIMAPESearchReturn)esearchReturn
+                                                             partialLow:(uint32_t)partialLow
+                                                            partialHigh:(uint32_t)partialHigh
+                                                               sortKind:(MCOIMAPSortKind)sortKind
+                                                              isReverse:(BOOL)isReverse
+                                                       searchExpression:(MCOIMAPSearchExpression *)searchExpression;
+
 /** @name Search Operations */
 
 /**
