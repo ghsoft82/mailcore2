@@ -4056,9 +4056,9 @@ Array * IMAPSession::sort(String * folder, IMAPSortKind sortKind, int isReverse,
     Array * result = Array::array();
     for(clistiter * cur = clist_begin(result_list) ; cur != NULL ; cur = clist_next(cur))
     {
-        uint32_t * uid = (uint32_t *) clist_content(cur);
-        String * uidStr = String::stringWithUTF8Format("%d", *uid);
-        result->addObject(uidStr);
+        uint32_t uid = * (uint32_t *) clist_content(cur);
+        Value * nb = Value::valueWithUnsignedLongValue(uid);
+        result->addObject(nb);
     }
     mailimap_search_result_free(result_list);
     * pError = ErrorNone;
