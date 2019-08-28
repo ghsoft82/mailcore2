@@ -27,7 +27,13 @@ IMAPFolderStatusOperation::~IMAPFolderStatusOperation()
 void IMAPFolderStatusOperation::main()
 {
     ErrorCode error;
-    
+
+	session()->session()->closeFolder(&error);
+	if (error != ErrorNone) {
+		setError(error);
+		return;
+	}
+
     session()->session()->loginIfNeeded(&error);
     if (error != ErrorNone) {
         setError(error);

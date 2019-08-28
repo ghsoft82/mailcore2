@@ -11,6 +11,7 @@ namespace mailcore {
     
     class IMAPOperation;
     class IMAPFetchFoldersOperation;
+    class IMAPFetchFoldersWithStatusOperation;
     class IMAPAppendMessageOperation;
     class IMAPCopyMessagesOperation;
     class IMAPFetchMessagesOperation;

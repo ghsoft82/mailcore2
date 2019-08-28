@@ -12,6 +12,7 @@
 #include "MCIMAPFolderInfoOperation.h"
 #include "MCIMAPFolderStatusOperation.h"
 #include "MCIMAPFetchFoldersOperation.h"
+#include "MCIMAPFetchFoldersWithStatusOperation.h"
 #include "MCIMAPRenameFolderOperation.h"
 #include "MCIMAPDeleteFolderOperation.h"
 #include "MCIMAPCreateFolderOperation.h"
@@ -42,6 +43,7 @@
 #include "MCIMAPMessageRenderingOperation.h"
 #include "MCIMAPCustomCommandOperation.h"
 #include "MCIMAPIdentity.h"
+#include "MCIMAPCloseFolderOperation.h"
 
 using namespace mailcore;
 

@@ -7,6 +7,7 @@ void IMAPFolder::init()
     mPath = NULL;
     mDelimiter = 0;
     mFlags = IMAPFolderFlagNone;
+    mStatus = NULL;
 }
 
 IMAPFolder::IMAPFolder()
@@ -20,6 +21,7 @@ IMAPFolder::IMAPFolder(IMAPFolder * other)
     setPath(other->path());
     setDelimiter(other->delimiter());
     setFlags(other->flags());
+    setStatus(other->status());
 }
 
 IMAPFolder::~IMAPFolder()
@@ -60,6 +62,16 @@ void IMAPFolder::setFlags(IMAPFolderFlag flags)
 IMAPFolderFlag IMAPFolder::flags()
 {
     return mFlags;
+}
+
+void IMAPFolder::setStatus(IMAPFolderStatus * status)
+{
+    mStatus = status;
+}
+
+IMAPFolderStatus * IMAPFolder::status()
+{
+    return mStatus;
 }
 
 String * IMAPFolder::description()

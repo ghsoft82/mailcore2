@@ -41,6 +41,22 @@
 		4BE4029217B548D900ECC5E4 /* MCIMAPQuotaOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B3C1BE017ABF4BC008BBF4C /* MCIMAPQuotaOperation.h */; };
 		636F55A01BCFA9A600AA00DB /* MailCore.h in Headers */ = {isa = PBXBuildFile; fileRef = C64EA7A4169F2A3E00778456 /* MailCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		636F55A11BCFA9A600AA00DB /* MailCore.h in Headers */ = {isa = PBXBuildFile; fileRef = C64EA7A4169F2A3E00778456 /* MailCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		779CA7FC2315A16F0006DAEB /* MCIMAPCloseFolderOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779CA7FB2315A16E0006DAEB /* MCIMAPCloseFolderOperation.cpp */; };
+		779CA7FE2315A3A50006DAEB /* MCIMAPCloseFolderOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779CA7FB2315A16E0006DAEB /* MCIMAPCloseFolderOperation.cpp */; };
+		779CA8012315A5BA0006DAEB /* MCOIMAPCloseFolderOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 779CA8002315A5B90006DAEB /* MCOIMAPCloseFolderOperation.mm */; };
+		779CA8022315AB8E0006DAEB /* MCOIMAPCloseFolderOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 779CA8002315A5B90006DAEB /* MCOIMAPCloseFolderOperation.mm */; };
+		779CA8032315ABC10006DAEB /* MCIMAPCloseFolderOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 779CA7F62315A16E0006DAEB /* MCIMAPCloseFolderOperation.h */; };
+		779CA8042315ABD50006DAEB /* MCOIMAPCloseFolderOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 779CA7FF2315A5B90006DAEB /* MCOIMAPCloseFolderOperation.h */; };
+		779CA8052315AC2F0006DAEB /* MCOIMAPCloseFolderOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 779CA7FF2315A5B90006DAEB /* MCOIMAPCloseFolderOperation.h */; };
+		779CA8062315AC400006DAEB /* MCIMAPCloseFolderOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 779CA7F62315A16E0006DAEB /* MCIMAPCloseFolderOperation.h */; };
+		77B6047C22F490F900CEFFBD /* MCOIMAPFetchFoldersWithStatusOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77E324B022F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.h */; };
+		77B6048122F4912700CEFFBD /* MCIMAPFetchFoldersWithStatusOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77E324AE22F48B6900F4207D /* MCIMAPFetchFoldersWithStatusOperation.h */; };
+		77B6048422F4914B00CEFFBD /* MCOIMAPFetchFoldersWithStatusOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77E324B022F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.h */; };
+		77B6048522F4915100CEFFBD /* MCIMAPFetchFoldersWithStatusOperation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77E324AE22F48B6900F4207D /* MCIMAPFetchFoldersWithStatusOperation.h */; };
+		77B6048622F494E500CEFFBD /* MCOIMAPFetchFoldersWithStatusOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77E324B122F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.mm */; };
+		77B6048722F494EE00CEFFBD /* MCIMAPFetchFoldersWithStatusOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E324A922F48B6800F4207D /* MCIMAPFetchFoldersWithStatusOperation.cpp */; };
+		77E324AF22F48B6900F4207D /* MCIMAPFetchFoldersWithStatusOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77E324A922F48B6800F4207D /* MCIMAPFetchFoldersWithStatusOperation.cpp */; };
+		77E324B222F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77E324B122F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.mm */; };
 		77F61A5B2268DCFB00242726 /* MCOIMAPSortOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77F61A582268DCFA00242726 /* MCOIMAPSortOperation.mm */; };
 		77F61A5C2268DCFB00242726 /* MCOIMAPSortOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77F61A582268DCFA00242726 /* MCOIMAPSortOperation.mm */; };
 		77F61A612268DD2000242726 /* MCIMAPSortOperation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F61A5F2268DD2000242726 /* MCIMAPSortOperation.cpp */; };
@@ -1078,6 +1094,10 @@
 			files = (
 				77F61A672268E08B00242726 /* MCIMAPSortOperation.h in CopyFiles */,
 				F38221A81C7B63E500E00721 /* MCONNTPPostOperation.h in CopyFiles */,
+				77B6048422F4914B00CEFFBD /* MCOIMAPFetchFoldersWithStatusOperation.h in CopyFiles */,
+				779CA8042315ABD50006DAEB /* MCOIMAPCloseFolderOperation.h in CopyFiles */,
+				77B6048522F4915100CEFFBD /* MCIMAPFetchFoldersWithStatusOperation.h in CopyFiles */,
+				779CA8032315ABC10006DAEB /* MCIMAPCloseFolderOperation.h in CopyFiles */,
 				F38221A71C7B638200E00721 /* MCNNTPPostOperation.h in CopyFiles */,
 				817FA5291C69037B006146BD /* MCOIMAPFetchContentToFileOperation.h in CopyFiles */,
 				817FA5281C69016A006146BD /* MCIMAPFetchContentToFileOperation.h in CopyFiles */,
@@ -1320,7 +1340,11 @@
 			dstSubfolderSpec = 16;
 			files = (
 				F38221A61C7B62E900E00721 /* MCONNTPPostOperation.h in CopyFiles */,
+				779CA8062315AC400006DAEB /* MCIMAPCloseFolderOperation.h in CopyFiles */,
 				F38221A51C7B629B00E00721 /* MCNNTPPostOperation.h in CopyFiles */,
+				779CA8052315AC2F0006DAEB /* MCOIMAPCloseFolderOperation.h in CopyFiles */,
+				77B6047C22F490F900CEFFBD /* MCOIMAPFetchFoldersWithStatusOperation.h in CopyFiles */,
+				77B6048122F4912700CEFFBD /* MCIMAPFetchFoldersWithStatusOperation.h in CopyFiles */,
 				817FA52A1C69038F006146BD /* MCOIMAPFetchContentToFileOperation.h in CopyFiles */,
 				817FA5271C69013C006146BD /* MCIMAPFetchContentToFileOperation.h in CopyFiles */,
 				77F61A6B2268E0F000242726 /* MCIMAPSortOperation.h in CopyFiles */,
@@ -1557,6 +1581,14 @@
 		4B3C1BDD17ABF307008BBF4C /* MCOIMAPQuotaOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MCOIMAPQuotaOperation.mm; sourceTree = "<group>"; };
 		4B3C1BDF17ABF4BB008BBF4C /* MCIMAPQuotaOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCIMAPQuotaOperation.cpp; sourceTree = "<group>"; };
 		4B3C1BE017ABF4BC008BBF4C /* MCIMAPQuotaOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCIMAPQuotaOperation.h; sourceTree = "<group>"; };
+		779CA7F62315A16E0006DAEB /* MCIMAPCloseFolderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCIMAPCloseFolderOperation.h; sourceTree = "<group>"; };
+		779CA7FB2315A16E0006DAEB /* MCIMAPCloseFolderOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCIMAPCloseFolderOperation.cpp; sourceTree = "<group>"; };
+		779CA7FF2315A5B90006DAEB /* MCOIMAPCloseFolderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCOIMAPCloseFolderOperation.h; sourceTree = "<group>"; };
+		779CA8002315A5B90006DAEB /* MCOIMAPCloseFolderOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MCOIMAPCloseFolderOperation.mm; sourceTree = "<group>"; };
+		77E324A922F48B6800F4207D /* MCIMAPFetchFoldersWithStatusOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCIMAPFetchFoldersWithStatusOperation.cpp; sourceTree = "<group>"; };
+		77E324AE22F48B6900F4207D /* MCIMAPFetchFoldersWithStatusOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCIMAPFetchFoldersWithStatusOperation.h; sourceTree = "<group>"; };
+		77E324B022F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCOIMAPFetchFoldersWithStatusOperation.h; sourceTree = "<group>"; };
+		77E324B122F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MCOIMAPFetchFoldersWithStatusOperation.mm; sourceTree = "<group>"; };
 		77F61A572268DCFA00242726 /* MCOIMAPSortOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCOIMAPSortOperation.h; sourceTree = "<group>"; };
 		77F61A582268DCFA00242726 /* MCOIMAPSortOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MCOIMAPSortOperation.mm; sourceTree = "<group>"; };
 		77F61A5F2268DD2000242726 /* MCIMAPSortOperation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCIMAPSortOperation.cpp; sourceTree = "<group>"; };
@@ -2620,6 +2652,8 @@
 		C64EA68B169E847800778456 /* imap */ = {
 			isa = PBXGroup;
 			children = (
+				77E324AE22F48B6900F4207D /* MCIMAPFetchFoldersWithStatusOperation.h */,
+				77E324A922F48B6800F4207D /* MCIMAPFetchFoldersWithStatusOperation.cpp */,
 				77F61A602268DD2000242726 /* MCIMAPSortOperation.h */,
 				77F61A5F2268DD2000242726 /* MCIMAPSortOperation.cpp */,
 				C64EA7F916A15A9200778456 /* MCAsyncIMAP.h */,
@@ -2690,6 +2724,8 @@
 				DA0F1C7A177C07B300F0D3B4 /* MCIMAPMessageRenderingOperation.h */,
 				84B639EB17F280F3003B5BA2 /* MCIMAPNoopOperation.cpp */,
 				84B639EC17F280F3003B5BA2 /* MCIMAPNoopOperation.h */,
+				779CA7F62315A16E0006DAEB /* MCIMAPCloseFolderOperation.h */,
+				779CA7FB2315A16E0006DAEB /* MCIMAPCloseFolderOperation.cpp */,
 				C6EFFBC6182BBF5700CFF656 /* MCIMAPMultiDisconnectOperation.cpp */,
 				C6EFFBC7182BBF5700CFF656 /* MCIMAPMultiDisconnectOperation.h */,
 			);
@@ -3158,6 +3194,8 @@
 		F8EA941316BAED500011AC6F /* imap */ = {
 			isa = PBXGroup;
 			children = (
+				77E324B022F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.h */,
+				77E324B122F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.mm */,
 				77F61A572268DCFA00242726 /* MCOIMAPSortOperation.h */,
 				77F61A582268DCFA00242726 /* MCOIMAPSortOperation.mm */,
 				C64BB25416FD32A0000DB34C /* MCOIMAP.h */,
@@ -3224,6 +3262,8 @@
 				DA89896C178A47D200F6D90A /* MCOIMAPMessageRenderingOperation.mm */,
 				8416A99F17F2871D00B3C7DA /* MCOIMAPNoopOperation.h */,
 				8416A9A017F2871D00B3C7DA /* MCOIMAPNoopOperation.mm */,
+				779CA7FF2315A5B90006DAEB /* MCOIMAPCloseFolderOperation.h */,
+				779CA8002315A5B90006DAEB /* MCOIMAPCloseFolderOperation.mm */,
 				C63D316017C92D8300A4D993 /* MCOIMAPIdentity.h */,
 				C63D316117C92D8300A4D993 /* MCOIMAPIdentity.mm */,
 				C6EFFBCA1833334900CFF656 /* MCOIMAPMultiDisconnectOperation.h */,
@@ -3607,6 +3647,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				779CA7FC2315A16F0006DAEB /* MCIMAPCloseFolderOperation.cpp in Sources */,
+				779CA8012315A5BA0006DAEB /* MCOIMAPCloseFolderOperation.mm in Sources */,
 				84D7373D199BF83B005124E5 /* MCNNTPFetchArticleOperation.cpp in Sources */,
 				C64EA6F4169E847800778456 /* MCAbstractMessage.cpp in Sources */,
 				C64EA6F6169E847800778456 /* MCAbstractMessagePart.cpp in Sources */,
@@ -3657,6 +3699,7 @@
 				27478E801A764698004AE621 /* MCAccountValidator.cpp in Sources */,
 				84D7375C199BFDCA005124E5 /* MCNNTPListNewsgroupsOperation.cpp in Sources */,
 				C64EA73C169E847800778456 /* MCAttachment.cpp in Sources */,
+				77E324B222F48D6700F4207D /* MCOIMAPFetchFoldersWithStatusOperation.mm in Sources */,
 				C64EA73E169E847800778456 /* MCMessageBuilder.cpp in Sources */,
 				C64EA740169E847800778456 /* MCMessageParser.cpp in Sources */,
 				C64EA742169E847800778456 /* MCMessagePart.cpp in Sources */,
@@ -3684,6 +3727,7 @@
 				C64EA80816A2999A00778456 /* MCIMAPCreateFolderOperation.cpp in Sources */,
 				BDCD7CC51A70771B0001DCC3 /* csmatch.cpp in Sources */,
 				C64EA80B16A299B700778456 /* MCIMAPSubscribeFolderOperation.cpp in Sources */,
+				77E324AF22F48B6900F4207D /* MCIMAPFetchFoldersWithStatusOperation.cpp in Sources */,
 				84D7372C199BF66C005124E5 /* MCNNTPAsyncSession.cpp in Sources */,
 				C64EA81116A299ED00778456 /* MCIMAPAppendMessageOperation.cpp in Sources */,
 				C64EA81416A29A2300778456 /* MCIMAPCopyMessagesOperation.cpp in Sources */,
@@ -3893,7 +3937,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				84D7373E199BF83B005124E5 /* MCNNTPFetchArticleOperation.cpp in Sources */,
+				779CA8022315AB8E0006DAEB /* MCOIMAPCloseFolderOperation.mm in Sources */,
 				C6BA2B991705F4E6003F0E9E /* MCAbstractMessage.cpp in Sources */,
+				77B6048622F494E500CEFFBD /* MCOIMAPFetchFoldersWithStatusOperation.mm in Sources */,
+				779CA7FE2315A3A50006DAEB /* MCIMAPCloseFolderOperation.cpp in Sources */,
+				77B6048722F494EE00CEFFBD /* MCIMAPFetchFoldersWithStatusOperation.cpp in Sources */,
 				C6BA2B9A1705F4E6003F0E9E /* MCAbstractMessagePart.cpp in Sources */,
 				BDCD7CF11A7079300001DCC3 /* umutex.cpp in Sources */,
 				84B639EE17F280F3003B5BA2 /* MCIMAPNoopOperation.cpp in Sources */,
@@ -4210,19 +4258,7 @@
 				INFOPLIST_FILE = "framework-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = (
-					"-lctemplate-ios",
-					"-letpan-ios",
-					"-lxml2",
-					"-lsasl2",
-					"-liconv",
-					"-ltidy",
-					"-lz",
-					"-lc++",
-					"-lresolv",
-					"-stdlib=libc++",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.libmailcore.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MailCore;
 				SDKROOT = iphoneos;
@@ -4247,19 +4283,7 @@
 				INFOPLIST_FILE = "framework-Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = (
-					"-lctemplate-ios",
-					"-letpan-ios",
-					"-lxml2",
-					"-lsasl2",
-					"-liconv",
-					"-ltidy",
-					"-lz",
-					"-lc++",
-					"-lresolv",
-					"-stdlib=libc++",
-					"-ObjC",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.libmailcore.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = MailCore;
 				SDKROOT = iphoneos;

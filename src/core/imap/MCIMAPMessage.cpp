@@ -60,6 +60,7 @@ IMAPMessage::~IMAPMessage()
     MC_SAFE_RELEASE(mMainPart);
     MC_SAFE_RELEASE(mGmailLabels);
     MC_SAFE_RELEASE(mCustomFlags);
+	MC_SAFE_RELEASE(mSnippet);
 }
 
 Object * IMAPMessage::copy()
@@ -257,7 +258,7 @@ String * IMAPMessage::snippet()
 
 void IMAPMessage::setSnippet(String *snippet)
 {
-    mSnippet = snippet;
+	MC_SAFE_REPLACE_COPY(String, mSnippet, snippet);
 }
 
 String * IMAPMessage::htmlRendering(String * folder,

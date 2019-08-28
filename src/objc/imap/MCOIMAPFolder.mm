@@ -11,6 +11,9 @@
 #import "MCOUtils.h"
 
 #include "MCIMAP.h"
+#include "MCIMAPFolderStatus.h"
+
+#include "MCOIMAPFolderStatus.h"
 
 @implementation MCOIMAPFolder {
     mailcore::IMAPFolder * _nativeFolder;
@@ -75,5 +78,6 @@
 MCO_OBJC_SYNTHESIZE_STRING(setPath, path)
 MCO_OBJC_SYNTHESIZE_SCALAR(char, char, setDelimiter, delimiter)
 MCO_OBJC_SYNTHESIZE_SCALAR(MCOIMAPFolderFlag, mailcore::IMAPFolderFlag, setFlags, flags)
+MCO_OBJC_SYNTHESIZE(IMAPFolderStatus, setStatus, status)
 
 @end

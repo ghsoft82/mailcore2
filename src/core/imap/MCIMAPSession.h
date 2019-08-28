@@ -75,6 +75,8 @@ namespace mailcore
         virtual Array * /* IMAPFolder */ fetchSubscribedFolders(ErrorCode * pError);
         virtual Array * /* IMAPFolder */ fetchAllFolders(ErrorCode * pError); // will use xlist if available
 
+        virtual Array * /* IMAPFolder */ fetchAllFoldersWithStatus(ErrorCode * pError); // will use xlist if available
+
         virtual void renameFolder(String * folder, String * otherName, ErrorCode * pError);
         virtual void deleteFolder(String * folder, ErrorCode * pError);
         virtual void createFolder(String * folder, ErrorCode * pError);
@@ -176,6 +178,7 @@ namespace mailcore
         virtual void disconnect();
 
         virtual void noop(ErrorCode * pError);
+		virtual void closeFolder(ErrorCode * pError);
 
         virtual HashMap * fetchNamespace(ErrorCode * pError);
 

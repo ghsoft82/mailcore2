@@ -19,6 +19,7 @@
 #include "MCIMAPFolderInfoOperation.h"
 #include "MCIMAPFolderStatusOperation.h"
 #include "MCIMAPFetchFoldersOperation.h"
+#include "MCIMAPFetchFoldersWithStatusOperation.h"
 #include "MCIMAPRenameFolderOperation.h"
 #include "MCIMAPDeleteFolderOperation.h"
 #include "MCIMAPCreateFolderOperation.h"
@@ -44,6 +45,7 @@
 #include "MCIMAPQuotaOperation.h"
 #include "MCIMAPDisconnectOperation.h"
 #include "MCIMAPNoopOperation.h"
+#include "MCIMAPCloseFolderOperation.h"
 #include "MCIMAPMessageRenderingOperation.h"
 #include "MCIMAPCustomCommandOperation.h"
 
@@ -419,6 +421,14 @@ IMAPFetchFoldersOperation * IMAPAsyncSession::fetchSubscribedFoldersOperation()
 IMAPFetchFoldersOperation * IMAPAsyncSession::fetchAllFoldersOperation()
 {
     IMAPFetchFoldersOperation * op = new IMAPFetchFoldersOperation();
+    op->setMainSession(this);
+    op->autorelease();
+    return op;
+}
+
+IMAPFetchFoldersWithStatusOperation * IMAPAsyncSession::fetchAllFoldersWithStatusOperation()
+{
+    IMAPFetchFoldersWithStatusOperation * op = new IMAPFetchFoldersWithStatusOperation();
     op->setMainSession(this);
     op->autorelease();
     return op;
@@ -860,6 +870,14 @@ IMAPOperation * IMAPAsyncSession::noopOperation()
     op->setMainSession(this);
     op->autorelease();
     return op;
+}
+
+IMAPOperation * IMAPAsyncSession::closeFolderOperation()
+{
+	IMAPCloseFolderOperation * op = new IMAPCloseFolderOperation();
+	op->setMainSession(this);
+	op->autorelease();
+	return op;
 }
 
 IMAPOperation * IMAPAsyncSession::disconnectOperation()

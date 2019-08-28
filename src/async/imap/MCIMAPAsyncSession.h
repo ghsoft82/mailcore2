@@ -19,6 +19,7 @@ namespace mailcore {
     
     class IMAPOperation;
     class IMAPFetchFoldersOperation;
+    class IMAPFetchFoldersWithStatusOperation;
     class IMAPAppendMessageOperation;
     class IMAPCopyMessagesOperation;
     class IMAPMoveMessagesOperation;
@@ -118,6 +119,8 @@ namespace mailcore {
         
         virtual IMAPFetchFoldersOperation * fetchSubscribedFoldersOperation();
         virtual IMAPFetchFoldersOperation * fetchAllFoldersOperation();
+
+        virtual IMAPFetchFoldersWithStatusOperation * fetchAllFoldersWithStatusOperation();
         
         virtual IMAPOperation * renameFolderOperation(String * folder, String * otherName);
         virtual IMAPOperation * deleteFolderOperation(String * folder);
@@ -187,6 +190,7 @@ namespace mailcore {
         virtual IMAPQuotaOperation * quotaOperation();
         
         virtual IMAPOperation * noopOperation();
+		virtual IMAPOperation * closeFolderOperation();
         
         virtual IMAPMessageRenderingOperation * htmlRenderingOperation(IMAPMessage * message, String * folder);
         virtual IMAPMessageRenderingOperation * htmlBodyRenderingOperation(IMAPMessage * message, String * folder);

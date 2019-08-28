@@ -15,6 +15,8 @@
 #import <Foundation/Foundation.h>
 #import <MailCore/MCOConstants.h>
 
+@class MCOIMAPFolderStatus;
+
 @interface MCOIMAPFolder : NSObject <NSCopying>
 
 /** The folder's path, like for example INBOX.Archive */
@@ -28,6 +30,9 @@
  it could be marked with metadata like that it has no children.
 */
 @property (nonatomic, assign) MCOIMAPFolderFlag flags;
+
+/** The folder's status, added for the List Extended command */
+@property (nonatomic, copy) MCOIMAPFolderStatus * status;
 
 @end
 

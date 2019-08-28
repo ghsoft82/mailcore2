@@ -13,6 +13,7 @@
 #import "MCOObjectWrapper.h"
 #import "MCOIMAPOperation.h"
 #import "MCOIMAPFetchFoldersOperation.h"
+#import "MCOIMAPFetchFoldersWithStatusOperation.h"
 #import "MCOIMAPBaseOperation+Private.h"
 #import "MCOIMAPMessageRenderingOperation.h"
 #import "MCOIMAPIdentity.h"
@@ -224,6 +225,11 @@ MCO_OBJC_SYNTHESIZE_SCALAR(dispatch_queue_t, dispatch_queue_t, setDispatchQueue,
 
 - (MCOIMAPFetchFoldersOperation *)fetchAllFoldersOperation {
     IMAPOperation *coreOp = MCO_NATIVE_INSTANCE->fetchAllFoldersOperation();
+    return MCO_TO_OBJC_OP(coreOp);
+}
+
+- (MCOIMAPFetchFoldersWithStatusOperation *)fetchAllFoldersWithStatusOperation {
+    IMAPOperation *coreOp = MCO_NATIVE_INSTANCE->fetchAllFoldersWithStatusOperation();
     return MCO_TO_OBJC_OP(coreOp);
 }
 
@@ -698,6 +704,12 @@ MCO_OBJC_SYNTHESIZE_SCALAR(dispatch_queue_t, dispatch_queue_t, setDispatchQueue,
 {
     IMAPOperation *coreOp = MCO_NATIVE_INSTANCE->noopOperation();
     return OPAQUE_OPERATION(coreOp);
+}
+
+- (MCOIMAPOperation *)closeFolderOperation
+{
+	IMAPOperation *coreOp = MCO_NATIVE_INSTANCE->closeFolderOperation();
+	return MCO_TO_OBJC_OP(coreOp);
 }
 
 - (MCOIMAPOperation *)checkAccountOperation

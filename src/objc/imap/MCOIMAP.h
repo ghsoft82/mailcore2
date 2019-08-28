@@ -13,6 +13,7 @@
 #import <MailCore/MCOIMAPSession.h>
 #import <MailCore/MCOIMAPOperation.h>
 #import <MailCore/MCOIMAPFetchFoldersOperation.h>
+#import <MailCore/MCOIMAPFetchFoldersWithStatusOperation.h>
 #import <MailCore/MCOIMAPFolder.h>
 #import <MailCore/MCOIMAPMessage.h>
 #import <MailCore/MCOIMAPMessagePart.h>

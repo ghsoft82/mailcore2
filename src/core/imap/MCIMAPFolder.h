@@ -8,6 +8,8 @@
 #ifdef __cplusplus
 
 namespace mailcore {
+
+    class IMAPFolderStatus;
     
     class MAILCORE_EXPORT IMAPFolder : public Object {
     public:
@@ -22,6 +24,9 @@ namespace mailcore {
         
         virtual void setFlags(IMAPFolderFlag flags);
         virtual IMAPFolderFlag flags();
+
+        virtual void setStatus(IMAPFolderStatus * status);
+        virtual IMAPFolderStatus * status();
         
     public: // subclass behavior
         IMAPFolder(IMAPFolder * other);
@@ -32,6 +37,7 @@ namespace mailcore {
         String * mPath;
         char mDelimiter;
         IMAPFolderFlag mFlags;
+        IMAPFolderStatus * mStatus;
         void init();
     };
     

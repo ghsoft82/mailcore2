@@ -14,6 +14,7 @@
 #import <MailCore/MCOConstants.h>
 
 @class MCOIMAPFetchFoldersOperation;
+@class MCOIMAPFetchFoldersWithStatusOperation;
 @class MCOIMAPOperation;
 @class MCOIMAPNamespace;
 @class MCOIMAPFolderInfoOperation;
@@ -209,6 +210,16 @@
      }];
 */
 - (MCOIMAPFetchFoldersOperation *) fetchAllFoldersOperation;
+
+/**
+ Returns an operation that gets all folders with status
+
+ MCOIMAPFetchFoldersWithStatusOperation * op = [session fetchAllFoldersWithStatusOperation];
+ [op start:^(NSError * __nullable error, NSArray *folders) {
+ ...
+ }];
+ */
+- (MCOIMAPFetchFoldersWithStatusOperation *) fetchAllFoldersWithStatusOperation;
 
 /**
  Creates an operation for renaming a folder
@@ -946,6 +957,17 @@ vanishedMessages will be set only for servers that support QRESYNC. See [RFC5162
  }];
  */
 - (MCOIMAPOperation *) noopOperation;
+
+/**
+ Returns an operation that will CLOSE the selected folder.
+
+ MCOIMAPOperation * op = [session closeFolderOperation];
+ [op start:^(NSError * __nullable error) {
+ ...
+ }];
+ */
+
+- (MCOIMAPOperation *) closeFolderOperation;
 
 /**
  Returns an operation that will check whether the IMAP account is valid.

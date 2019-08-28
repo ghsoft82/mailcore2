@@ -461,6 +461,8 @@ typedef NS_ENUM(NSInteger, MCOErrorCode) {
     MCOErrorTiscaliSimplePassword,
     /** The count of all errors */
     MCOErrorCodeCount,
+	/** IMAP: Error when a close operation fails.*/
+	MCOErrorClose,
 };
 
 /** Error userInfo key for SMTP operations response string */

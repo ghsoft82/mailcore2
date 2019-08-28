@@ -1343,7 +1343,7 @@ IMAPFolderStatus * IMAPSession::folderStatus(String * folder, ErrorCode * pError
     MCLog("status");
     MCAssert(mState == STATE_LOGGEDIN || mState == STATE_SELECTED);
 
-    struct mailimap_mailbox_data_status * status;
+    clist * listStatus;
 
     struct mailimap_status_att_list * status_att_list;
 
@@ -1358,7 +1358,7 @@ IMAPFolderStatus * IMAPSession::folderStatus(String * folder, ErrorCode * pError
         mailimap_status_att_list_add(status_att_list, MAILIMAP_STATUS_ATT_HIGHESTMODSEQ);
     }
 
-    r = mailimap_status(mImap, MCUTF8(folder), status_att_list, &status);
+    r = mailimap_status(mImap, MCUTF8(folder), status_att_list, &listStatus);
 
     IMAPFolderStatus * fs;
     fs = new IMAPFolderStatus();
@@ -1387,52 +1387,56 @@ IMAPFolderStatus * IMAPSession::folderStatus(String * folder, ErrorCode * pError
         return fs;
     }
 
-    clistiter * cur;
+    clistiter * cur_status = clist_begin(listStatus);
 
-
-    if (status != NULL)
+    if (cur_status != NULL)
     {
 
-        struct mailimap_status_info * status_info;
-        for(cur = clist_begin(status->st_info_list) ; cur != NULL ;
-            cur = clist_next(cur))
+        struct mailimap_mailbox_data_status * status = (struct mailimap_mailbox_data_status *) cur_status->data;
+
+        if (status != NULL)
         {
+            clistiter * cur;
 
-            status_info = (struct mailimap_status_info *) clist_content(cur);
-
-            switch (status_info->st_att)
+            struct mailimap_status_info * status_info;
+            for(cur = clist_begin(status->st_info_list) ; cur != NULL ;
+                cur = clist_next(cur))
             {
-                case MAILIMAP_STATUS_ATT_UNSEEN:
-                    fs->setUnseenCount(status_info->st_value);
-                    break;
-                case MAILIMAP_STATUS_ATT_MESSAGES:
-                    fs->setMessageCount(status_info->st_value);
-                    break;
-                case MAILIMAP_STATUS_ATT_RECENT:
-                    fs->setRecentCount(status_info->st_value);
-                    break;
-                case MAILIMAP_STATUS_ATT_UIDNEXT:
-                    fs->setUidNext(status_info->st_value);
-                    break;
-                case MAILIMAP_STATUS_ATT_UIDVALIDITY:
-                    fs->setUidValidity(status_info->st_value);
-                    break;
-                case MAILIMAP_STATUS_ATT_EXTENSION:
+
+                status_info = (struct mailimap_status_info *) clist_content(cur);
+
+                switch (status_info->st_att)
                 {
-                    struct mailimap_extension_data * ext_data = status_info->st_ext_data;
-                    if (ext_data->ext_extension == &mailimap_extension_condstore)
+                    case MAILIMAP_STATUS_ATT_UNSEEN:
+                        fs->setUnseenCount(status_info->st_value);
+                        break;
+                    case MAILIMAP_STATUS_ATT_MESSAGES:
+                        fs->setMessageCount(status_info->st_value);
+                        break;
+                    case MAILIMAP_STATUS_ATT_RECENT:
+                        fs->setRecentCount(status_info->st_value);
+                        break;
+                    case MAILIMAP_STATUS_ATT_UIDNEXT:
+                        fs->setUidNext(status_info->st_value);
+                        break;
+                    case MAILIMAP_STATUS_ATT_UIDVALIDITY:
+                        fs->setUidValidity(status_info->st_value);
+                        break;
+                    case MAILIMAP_STATUS_ATT_EXTENSION:
                     {
-                        struct mailimap_condstore_status_info * status_info = (struct mailimap_condstore_status_info *) ext_data->ext_data;
-                        fs->setHighestModSeqValue(status_info->cs_highestmodseq_value);
+                        struct mailimap_extension_data * ext_data = status_info->st_ext_data;
+                        if (ext_data->ext_extension == &mailimap_extension_condstore)
+                        {
+                            struct mailimap_condstore_status_info * status_info = (struct mailimap_condstore_status_info *) ext_data->ext_data;
+                            fs->setHighestModSeqValue(status_info->cs_highestmodseq_value);
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
-
-        mailimap_mailbox_data_status_free(status);
     }
-
+    mailimap_list_status_result_free(listStatus);
     mailimap_status_att_list_free(status_att_list);
 
     return fs;
@@ -1463,6 +1467,35 @@ void IMAPSession::noop(ErrorCode * pError)
             * pError = ErrorNoop;
         }
     }
+}
+
+void IMAPSession::closeFolder(ErrorCode * pError)
+{
+	int r;
+
+	if (mState != STATE_SELECTED) {
+		* pError = ErrorNone;
+		return;
+	}
+
+	MCLog("connect");
+	loginIfNeeded(pError);
+	if (* pError != ErrorNone)
+	{
+		return;
+	}
+	if (mImap->imap_stream != NULL)
+	{
+		r = mailimap_close(mImap);
+		if (r == MAILIMAP_ERROR_STREAM)
+		{
+			* pError = ErrorConnection;
+		}
+		if (r == MAILIMAP_ERROR_CLOSE)
+		{
+			* pError = ErrorClose;
+		}
+	}
 }
 
 #pragma mark mailbox flags conversion
@@ -1602,6 +1635,128 @@ static Array * resultsWithError(int r, clist * list, ErrorCode * pError)
         folder->release();
     }
 
+    mailimap_list_result_free(list);
+
+    * pError = ErrorNone;
+    return result;
+}
+
+static Array * statusResultsWithError(int r, clist * list, clist * listStatus, ErrorCode * pError)
+{
+    clistiter * cur;
+    clistiter * cur_status;
+    Array * result;
+
+    result = Array::array();
+    if (r == MAILIMAP_ERROR_STREAM)
+    {
+        * pError = ErrorConnection;
+        return NULL;
+    }
+    else if (r == MAILIMAP_ERROR_PARSE)
+    {
+        * pError = ErrorParse;
+        return NULL;
+    }
+    else if (hasError(r))
+    {
+        * pError = ErrorNonExistantFolder;
+        return NULL;
+    }
+
+    cur_status = clist_begin(listStatus);
+    for(cur = clist_begin(list) ; cur != NULL ; cur = cur->next)
+    {
+        struct mailimap_mailbox_list * mb_list;
+        IMAPFolderFlag flags;
+        IMAPFolder * folder;
+        String * path;
+
+        mb_list = (struct mailimap_mailbox_list *) cur->data;
+
+        flags = IMAPFolderFlagNone;
+        if (mb_list->mb_flag != NULL)
+            flags = (IMAPFolderFlag) imap_mailbox_flags_to_flags(mb_list->mb_flag);
+
+        folder = new IMAPFolder();
+        path = String::stringWithUTF8Characters(mb_list->mb_name);
+        if (path->uppercaseString()->isEqual(MCSTR("INBOX")))
+        {
+            folder->setPath(MCSTR("INBOX"));
+        }
+        else
+        {
+            folder->setPath(path);
+        }
+        folder->setDelimiter(mb_list->mb_delimiter);
+        folder->setFlags(flags);
+
+        //Setting Status
+        if (cur_status != NULL)
+        {
+            struct mailimap_mailbox_data_status * status;
+
+            IMAPFolderStatus * fs;
+            fs = new IMAPFolderStatus();
+            fs->autorelease();
+
+            status = (struct mailimap_mailbox_data_status *) cur_status->data;
+
+            if (status != NULL)
+            {
+
+                struct mailimap_status_info * status_info;
+                clistiter * cur_status_2;
+
+                for(cur_status_2 = clist_begin(status->st_info_list) ; cur_status_2 != NULL ;
+                    cur_status_2 = clist_next(cur_status_2))
+                {
+
+                    status_info = (struct mailimap_status_info *) clist_content(cur_status_2);
+
+                    switch (status_info->st_att)
+                    {
+                        case MAILIMAP_STATUS_ATT_UNSEEN:
+                            fs->setUnseenCount(status_info->st_value);
+                            break;
+                        case MAILIMAP_STATUS_ATT_MESSAGES:
+                            fs->setMessageCount(status_info->st_value);
+                            break;
+                        case MAILIMAP_STATUS_ATT_RECENT:
+                            fs->setRecentCount(status_info->st_value);
+                            break;
+                        case MAILIMAP_STATUS_ATT_UIDNEXT:
+                            fs->setUidNext(status_info->st_value);
+                            break;
+                        case MAILIMAP_STATUS_ATT_UIDVALIDITY:
+                            fs->setUidValidity(status_info->st_value);
+                            break;
+                        case MAILIMAP_STATUS_ATT_EXTENSION:
+                        {
+                            struct mailimap_extension_data * ext_data = status_info->st_ext_data;
+                            if (ext_data->ext_extension == &mailimap_extension_condstore)
+                            {
+                                struct mailimap_condstore_status_info * status_info = (struct mailimap_condstore_status_info *) ext_data->ext_data;
+                                fs->setHighestModSeqValue(status_info->cs_highestmodseq_value);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                folder->setStatus(fs);
+
+                cur_status = cur_status->next;
+            }
+
+        }
+
+        result->addObject(folder);
+
+        folder->release();
+    }
+
+    mailimap_list_status_result_free(listStatus);
     mailimap_list_result_free(list);
 
     * pError = ErrorNone;
@@ -1772,6 +1927,102 @@ Array * /* IMAPFolder */ IMAPSession::fetchAllFolders(ErrorCode * pError)
     }
 
     return result;
+}
+
+Array * /* IMAPFolder */ IMAPSession::fetchAllFoldersWithStatus(ErrorCode * pError)
+{
+    int r;
+    clist * imap_folders;
+    clist * imap_folders_status;
+
+    loginIfNeeded(pError);
+    if (* pError != ErrorNone)
+        return NULL;
+
+    if (mDelimiter == 0)
+    {
+        char delimiter;
+
+        delimiter = fetchDelimiterIfNeeded(mDelimiter, pError);
+        if (* pError != ErrorNone)
+            return NULL;
+
+        //setDelimiter(delimiter);
+        mDelimiter = delimiter;
+    }
+
+    String * prefix = NULL;
+    if (defaultNamespace())
+    {
+        prefix = defaultNamespace()->mainPrefix();
+    }
+    if (prefix == NULL)
+    {
+        prefix = MCSTR("");
+    }
+    if (prefix->length() > 0)
+    {
+        if (!prefix->hasSuffix(String::stringWithUTF8Format("%c", mDelimiter)))
+        {
+            prefix = prefix->stringByAppendingUTF8Format("%c", mDelimiter);
+        }
+    }
+
+    struct mailimap_status_att_list * status_att_list;
+
+    status_att_list = mailimap_status_att_list_new_empty();
+    mailimap_status_att_list_add(status_att_list, MAILIMAP_STATUS_ATT_UNSEEN);
+    mailimap_status_att_list_add(status_att_list, MAILIMAP_STATUS_ATT_MESSAGES);
+    mailimap_status_att_list_add(status_att_list, MAILIMAP_STATUS_ATT_RECENT);
+    mailimap_status_att_list_add(status_att_list, MAILIMAP_STATUS_ATT_UIDNEXT);
+    mailimap_status_att_list_add(status_att_list, MAILIMAP_STATUS_ATT_UIDVALIDITY);
+    if (mCondstoreEnabled || mXYMHighestModseqEnabled)
+    {
+        mailimap_status_att_list_add(status_att_list, MAILIMAP_STATUS_ATT_HIGHESTMODSEQ);
+    }
+    r = mailimap_list_extended(mImap, MCUTF8(prefix), "*", status_att_list, &imap_folders, &imap_folders_status);
+
+    Array * foldersListWithStatus = statusResultsWithError(r, imap_folders, imap_folders_status, pError);
+    if (* pError == ErrorConnection || * pError == ErrorParse)
+        mShouldDisconnect = true;
+
+    if (foldersListWithStatus != NULL)
+    {
+        bool hasInbox = false;
+        mc_foreacharray(IMAPFolder, folder, foldersListWithStatus)
+        {
+            if (folder->path()->isEqual(MCSTR("INBOX")))
+            {
+                hasInbox = true;
+            }
+        }
+
+        if (!hasInbox)
+        {
+            mc_foreacharray(IMAPFolder, folder, foldersListWithStatus)
+            {
+                if (folder->flags() & IMAPFolderFlagInbox)
+                {
+                    // some mail providers use non-standart name for inbox folder
+                    hasInbox = true;
+                    folder->setPath(MCSTR("INBOX"));
+                    break;
+                }
+            }
+
+            if (!hasInbox)
+            {
+                r = mailimap_list(mImap, "", "INBOX", &imap_folders);
+                Array * inboxResult = resultsWithError(r, imap_folders, pError);
+                if (* pError == ErrorConnection || * pError == ErrorParse)
+                    mShouldDisconnect = true;
+                foldersListWithStatus->addObjectsFromArray(inboxResult);
+                hasInbox = true;
+            }
+        }
+    }
+
+    return foldersListWithStatus;
 }
 
 void IMAPSession::renameFolder(String * folder, String * otherName, ErrorCode * pError)
