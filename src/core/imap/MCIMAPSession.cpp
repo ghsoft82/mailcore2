@@ -1473,6 +1473,7 @@ void IMAPSession::closeFolder(ErrorCode * pError)
 {
 	int r;
 
+	//No Folder selected, so return without perform CLOSE
 	if (mState != STATE_SELECTED) {
 		* pError = ErrorNone;
 		return;
@@ -1487,6 +1488,11 @@ void IMAPSession::closeFolder(ErrorCode * pError)
 	if (mImap->imap_stream != NULL)
 	{
 		r = mailimap_close(mImap);
+		if (r == MAILIMAP_NO_ERROR)
+		{
+			mState = STATE_LOGGEDIN;
+			* pError = ErrorNone;
+		}
 		if (r == MAILIMAP_ERROR_STREAM)
 		{
 			* pError = ErrorConnection;
